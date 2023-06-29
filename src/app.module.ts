@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { ConfigService } from '@nestjs/config';
 import { getMongodbConfig } from './config/mongo.config';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -13,6 +15,8 @@ import { getMongodbConfig } from './config/mongo.config';
       inject: [ConfigService],
       useFactory: getMongodbConfig,
     }),
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
