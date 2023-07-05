@@ -9,13 +9,16 @@ import { InjectModel } from 'nestjs-typegoose';
 
 import { AuthDto } from './dto/auth.dto';
 import { UserModel } from '../user/user.model';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   private readonly saltRounds = 10;
 
   constructor(
-    @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>
+    @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
+
+    private readonly jwtService: JwtService
   ) {}
 
   async register(dto: AuthDto) {
@@ -34,7 +37,12 @@ export class AuthService {
       password: await hash(dto.password, salt),
     });
 
-    return newUser.save();
+    const tokens = await this.issueTokenPair(String(newUser._id));
+
+    return {
+      user: this.returnUserFields(newUser),
+      ...tokens,
+    };
   }
 
   async login(dto: AuthDto) {
@@ -50,10 +58,37 @@ export class AuthService {
       throw new UnauthorizedException('Invalid password!');
     }
 
-    return user;
+    const tokens = await this.issueTokenPair(String(user._id));
+
+    return {
+      user: this.returnUserFields(user),
+      ...tokens,
+    };
   }
 
   async findByEmail(email: string) {
     return this.UserModel.findOne({ email });
+  }
+
+  async issueTokenPair(userId: string) {
+    const data = { _id: userId };
+
+    const accessToken = await this.jwtService.signAsync(data, {
+      expiresIn: '1h',
+    });
+
+    const refreshToken = await this.jwtService.signAsync(data, {
+      expiresIn: '10d',
+    });
+
+    return { accessToken, refreshToken };
+  }
+
+  returnUserFields(user: UserModel) {
+    return {
+      _id: user._id,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    };
   }
 }
