@@ -6,10 +6,10 @@ import {
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { genSalt, hash, compare } from 'bcryptjs';
 import { InjectModel } from 'nestjs-typegoose';
-
 import { AuthDto } from './dto/auth.dto';
 import { UserModel } from '../user/user.model';
 import { JwtService } from '@nestjs/jwt';
+import { RefreshTokenDto } from './dto/refreshToken.dto';
 
 @Injectable()
 export class AuthService {
@@ -21,8 +21,8 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
-  async register(dto: AuthDto) {
-    const existingUser = await this.findByEmail(dto.email);
+  async register({ email, password }: AuthDto) {
+    const existingUser = await this.findByEmail(email);
 
     if (existingUser) {
       throw new BadRequestException(
@@ -33,30 +33,52 @@ export class AuthService {
     const salt = await genSalt(this.saltRounds);
 
     const newUser = new this.UserModel({
-      email: dto.email,
-      password: await hash(dto.password, salt),
+      email,
+      password: await hash(password, salt),
     });
+    const user = await newUser.save();
 
-    const tokens = await this.issueTokenPair(String(newUser._id));
+    const tokens = await this.issueTokenPair(String(user._id));
 
     return {
-      user: this.returnUserFields(newUser),
+      user: this.returnUserFields(user),
       ...tokens,
     };
   }
 
-  async login(dto: AuthDto) {
-    const user = await this.findByEmail(dto.email);
+  async login({ email, password }: AuthDto) {
+    const user = await this.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('User not found!');
     }
 
-    const isValidPassword = await compare(dto.password, user.password);
+    const isValidPassword = await compare(password, user.password);
 
     if (!isValidPassword) {
       throw new UnauthorizedException('Invalid password!');
     }
+
+    const tokens = await this.issueTokenPair(String(user._id));
+
+    return {
+      user: this.returnUserFields(user),
+      ...tokens,
+    };
+  }
+
+  async getNewTokens({ refreshToken }: RefreshTokenDto) {
+    if (!refreshToken) {
+      throw new UnauthorizedException('Please sign in!');
+    }
+
+    const result = await this.jwtService.verifyAsync(refreshToken);
+
+    if (!result) {
+      throw new UnauthorizedException('Invalid token or expired!');
+    }
+
+    const user = await this.UserModel.findById(result._id);
 
     const tokens = await this.issueTokenPair(String(user._id));
 
