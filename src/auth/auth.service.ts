@@ -17,12 +17,11 @@ export class AuthService {
 
   constructor(
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
-
     private readonly jwtService: JwtService
   ) {}
 
-  async register(dto: AuthDto) {
-    const existingUser = await this.findByEmail(dto.email);
+  async register({ email, password }: AuthDto) {
+    const existingUser = await this.findByEmail(email);
 
     if (existingUser) {
       throw new BadRequestException(
@@ -33,26 +32,27 @@ export class AuthService {
     const salt = await genSalt(this.saltRounds);
 
     const newUser = new this.UserModel({
-      email: dto.email,
-      password: await hash(dto.password, salt),
+      email,
+      password: await hash(password, salt),
     });
+    const user = await newUser.save();
 
-    const tokens = await this.issueTokenPair(String(newUser._id));
+    const tokens = await this.issueTokenPair(String(user._id));
 
     return {
-      user: this.returnUserFields(newUser),
+      user: this.returnUserFields(user),
       ...tokens,
     };
   }
 
-  async login(dto: AuthDto) {
-    const user = await this.findByEmail(dto.email);
+  async login({ email, password }: AuthDto) {
+    const user = await this.findByEmail(email);
 
     if (!user) {
       throw new UnauthorizedException('User not found!');
     }
 
-    const isValidPassword = await compare(dto.password, user.password);
+    const isValidPassword = await compare(password, user.password);
 
     if (!isValidPassword) {
       throw new UnauthorizedException('Invalid password!');
