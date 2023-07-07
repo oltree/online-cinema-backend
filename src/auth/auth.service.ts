@@ -10,11 +10,10 @@ import { AuthDto } from './dto/auth.dto';
 import { UserModel } from '../user/user.model';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenDto } from './dto/refreshToken.dto';
+import { SALT_ROUND } from 'src/shared/constants/salt';
 
 @Injectable()
 export class AuthService {
-  private readonly saltRounds = 10;
-
   constructor(
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
 
@@ -30,7 +29,7 @@ export class AuthService {
       );
     }
 
-    const salt = await genSalt(this.saltRounds);
+    const salt = await genSalt(SALT_ROUND);
 
     const newUser = new this.UserModel({
       email,
