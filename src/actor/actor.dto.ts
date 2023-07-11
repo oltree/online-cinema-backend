@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class CreateGenreDto {
+export class ActorDto {
   @IsString()
   name: string;
 
@@ -8,8 +8,5 @@ export class CreateGenreDto {
   slug: string;
 
   @IsString()
-  description: string;
-
-  @IsString()
-  icon: string;
+  photo: string;
 }
