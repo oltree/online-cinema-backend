@@ -14,7 +14,7 @@ import { User } from './decorators/user.decorator';
 import { UserService } from './user.service';
 import { Auth } from '../auth/decorators/admin.decorator';
 import { Roles } from 'src/shared/enums/roles.enum';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from './user.dto';
 import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
 
 @Controller('users')

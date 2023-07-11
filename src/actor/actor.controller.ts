@@ -11,48 +11,38 @@ import {
   Query,
   Post,
 } from '@nestjs/common';
-import { Auth } from '../auth/decorators/admin.decorator';
-import { Roles } from 'src/shared/enums/roles.enum';
+import { ActorService } from './actor.service';
+import { ActorDto } from './actor.dto';
 import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
-import { GenreService } from './genre.service';
-import { GenreDto } from './genre.dto';
+import { Roles } from 'src/shared/enums/roles.enum';
+import { Auth } from '../auth/decorators/admin.decorator';
 
-@Controller('genres')
-export class GenreController {
-  constructor(private readonly GenreService: GenreService) {}
+@Controller('actor')
+export class ActorController {
+  constructor(private readonly ActorService: ActorService) {}
 
   @Get('by-slug/:slug')
   async bySlug(@Param('slug') slug: string) {
-    return this.GenreService.bySlug(slug);
+    return this.ActorService.bySlug(slug);
   }
 
   @Get()
   async getAll(@Query('searchTerm') searchTerm?: string) {
-    return this.GenreService.getAll(searchTerm);
-  }
-
-  @Get('/popular')
-  async getPopular() {
-    return this.GenreService.getPopular();
+    return this.ActorService.getAll(searchTerm);
   }
 
   @Get()
   @Auth(Roles.Admin)
   async get(@Param('id', IdValidationPipe) id?: string) {
-    return this.GenreService.byId(id);
+    return this.ActorService.byId(id);
   }
-
-  /* @Get('/collections')
-  async getCollections() {
-    return this.GenreService.getCollections();
-  } */
 
   @UsePipes(new ValidationPipe())
   @Post()
   @HttpCode(200)
   @Auth(Roles.Admin)
   async create() {
-    return this.GenreService.create();
+    return this.ActorService.create();
   }
 
   @UsePipes(new ValidationPipe())
@@ -61,15 +51,15 @@ export class GenreController {
   @Auth(Roles.Admin)
   async update(
     @Param('id', IdValidationPipe) id: string,
-    @Body() dto: GenreDto
+    @Body() dto: ActorDto
   ) {
-    return this.GenreService.update(id, dto);
+    return this.ActorService.update(id, dto);
   }
 
   @Delete(':id')
   @HttpCode(200)
   @Auth(Roles.Admin)
   async delete(@Param('id', IdValidationPipe) id: string) {
-    return this.GenreService.delete(id);
+    return this.ActorService.delete(id);
   }
 }

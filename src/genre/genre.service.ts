@@ -1,10 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
-import { SALT_ROUND } from 'src/shared/constants/salt';
-import { genSalt, hash } from 'bcryptjs';
 import { GenreModel } from './genre.model';
-import { CreateGenreDto } from './dto/create-genre.dto';
+import { GenreDto } from './genre.dto';
 
 @Injectable()
 export class GenreService {
@@ -37,7 +35,13 @@ export class GenreService {
   }
 
   async bySlug(slug: string) {
-    return this.GenreModel.findOne({ slug });
+    const genre = await this.GenreModel.findOne({ slug });
+
+    if (!genre) {
+      throw new NotFoundException('Genre not found!');
+    }
+
+    return genre;
   }
 
   async getPopular() {
@@ -80,7 +84,7 @@ export class GenreService {
   }
 
   async create() {
-    const defaultValue: CreateGenreDto = {
+    const defaultValue: GenreDto = {
       description: '',
       icon: '',
       name: '',
@@ -91,7 +95,7 @@ export class GenreService {
     return genre._id;
   }
 
-  async update(_id: string, dto: CreateGenreDto) {
+  async update(_id: string, dto: GenreDto) {
     const updateGenre = await this.GenreModel.findByIdAndUpdate(_id, dto, {
       new: true,
     });

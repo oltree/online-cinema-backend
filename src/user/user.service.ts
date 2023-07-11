@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { UserModel } from './user.model';
-import { UserDto } from './dto/user.dto';
+import { UserDto } from './user.dto';
 import { SALT_ROUND } from 'src/shared/constants/salt';
 import { genSalt, hash } from 'bcryptjs';
 
