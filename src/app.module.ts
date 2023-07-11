@@ -8,6 +8,8 @@ import { getMongodbConfig } from './config/mongo.config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { GenreModule } from './genre/genre.module';
+import { FileModule } from './file/file.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -19,6 +21,7 @@ import { GenreModule } from './genre/genre.module';
     AuthModule,
     UserModule,
     GenreModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

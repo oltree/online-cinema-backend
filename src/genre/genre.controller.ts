@@ -10,7 +10,6 @@ import {
   ValidationPipe,
   Query,
   Post,
-  NotFoundException,
 } from '@nestjs/common';
 import { Auth } from '../auth/decorators/admin.decorator';
 import { Roles } from 'src/shared/enums/roles.enum';
