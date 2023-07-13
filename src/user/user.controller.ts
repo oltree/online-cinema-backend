@@ -10,7 +10,7 @@ import {
   ValidationPipe,
   Query,
 } from '@nestjs/common';
-import { User } from './decorators/user.decorator';
+import { User } from './user.decorator';
 import { UserService } from './user.service';
 import { Auth } from '../auth/decorators/admin.decorator';
 import { Roles } from 'src/shared/enums/roles.enum';

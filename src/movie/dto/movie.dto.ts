@@ -28,9 +28,6 @@ export class MovieDto {
   title: string;
 
   @IsString()
-  description: string;
-
-  @IsString()
   slug: string;
 
   @IsString()
@@ -47,6 +44,5 @@ export class MovieDto {
   @IsString({ each: true })
   actors: string[];
 
-  @IsBoolean()
   isSendTelegram?: boolean;
 }

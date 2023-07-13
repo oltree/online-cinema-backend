@@ -36,7 +36,7 @@ export class GenreController {
     return this.GenreService.getPopular();
   }
 
-  @Get()
+  @Get(':id')
   @Auth(Roles.Admin)
   async get(@Param('id', IdValidationPipe) id?: string) {
     return this.GenreService.byId(id);
