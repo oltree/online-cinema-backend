@@ -31,7 +31,7 @@ export class ActorController {
     return this.ActorService.getAll(searchTerm);
   }
 
-  @Get()
+  @Get(':id')
   @Auth(Roles.Admin)
   async get(@Param('id', IdValidationPipe) id?: string) {
     return this.ActorService.byId(id);
