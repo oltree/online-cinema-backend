@@ -42,10 +42,10 @@ export class GenreController {
     return this.GenreService.byId(id);
   }
 
-  /* @Get('/collections')
+  @Get('/collections')
   async getCollections() {
     return this.GenreService.getCollections();
-  } */
+  }
 
   @UsePipes(new ValidationPipe())
   @Post()

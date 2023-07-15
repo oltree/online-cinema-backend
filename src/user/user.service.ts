@@ -5,6 +5,7 @@ import { UserModel } from './user.model';
 import { UserDto } from './user.dto';
 import { SALT_ROUND } from 'src/shared/constants/salt';
 import { genSalt, hash } from 'bcryptjs';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -70,5 +71,26 @@ export class UserService {
     return this.UserModel.find(options)
       .select('-password -updatedAt -__v')
       .sort({ createdAt: 'desc' });
+  }
+
+  async toggleFavorite(movieId: Types.ObjectId, { _id, favorites }: UserModel) {
+    await this.UserModel.findByIdAndUpdate(_id, {
+      favorites: favorites.includes(movieId)
+        ? favorites.filter((id) => String(id) !== String(movieId))
+        : [...favorites, movieId],
+    });
+  }
+
+  async getFavoriteMovies(_id: Types.ObjectId) {
+    return this.UserModel.findById(_id, 'favorites')
+      .populate({
+        path: 'favorites',
+        populate: {
+          path: 'genres',
+        },
+      })
+      .then((data) => {
+        return data.favorites;
+      });
   }
 }
