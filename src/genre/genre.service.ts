@@ -3,11 +3,14 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { GenreModel } from './genre.model';
 import { GenreDto } from './genre.dto';
+import { MovieService } from 'src/movie/movie.service';
+import { Collection } from './genre.interface';
 
 @Injectable()
 export class GenreService {
   constructor(
-    @InjectModel(GenreModel) private readonly GenreModel: ModelType<GenreModel>
+    @InjectModel(GenreModel) private readonly GenreModel: ModelType<GenreModel>,
+    private readonly MovieService: MovieService
   ) {}
 
   async getAll(searchTerm?: string) {
@@ -50,26 +53,26 @@ export class GenreService {
       .sort({ createdAt: 'desc' });
   }
 
-  /* async getCollections() {
-		const genres = await this.getAll()
+  async getCollections() {
+    const genres = await this.getAll();
 
-		const collections = await Promise.all(
-			genres.map(async (genre) => {
-				const moviesByGenre = await this.MovieService.byGenres([genre._id])
+    const collections = await Promise.all(
+      genres.map(async (genre) => {
+        const moviesByGenre = await this.MovieService.byGenres([genre._id]);
 
-				const result: ICollection = {
-					_id: String(genre._id),
-					title: genre.name,
-					slug: genre.slug,
-					image: moviesByGenre[0]?.bigPoster,
-				}
+        const result: Collection = {
+          _id: String(genre._id),
+          title: genre.name,
+          slug: genre.slug,
+          image: moviesByGenre[0]?.bigPoster,
+        };
 
-				return result
-			})
-		)
+        return result;
+      })
+    );
 
-		return collections
-	} */
+    return collections;
+  }
 
   // for admin
 
