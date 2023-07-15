@@ -127,9 +127,9 @@ export class MovieService {
     return deleteMovie;
   }
 
-  async updateRating(id: string, newRating: number) {
+  async updateRating(movieId: Types.ObjectId, newRating: number) {
     return this.MovieModel.findByIdAndUpdate(
-      id,
+      movieId,
       { rating: newRating },
       { new: true }
     );
