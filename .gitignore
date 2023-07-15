@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # env files
 .env
+
+# telegram bot api and token files
+src/config/telegram.config.ts

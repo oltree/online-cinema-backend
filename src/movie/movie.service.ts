@@ -4,12 +4,14 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 import { MovieDto } from './dto/movie.dto';
 import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
+import { TelegramService } from 'src/telegram/telegram.service';
 
 @Injectable()
 export class MovieService {
   constructor(
     @InjectModel(MovieModel)
-    private readonly MovieModel: ModelType<MovieModel>
+    private readonly MovieModel: ModelType<MovieModel>,
+    private readonly TelegramService: TelegramService
   ) {}
 
   async getAll(searchTerm?: string) {
@@ -106,6 +108,11 @@ export class MovieService {
   }
 
   async update(_id: string, dto: MovieDto) {
+    if (!dto.isSendTelegram) {
+      await this.sendNotification(dto);
+      dto.isSendTelegram = true;
+    }
+
     const updateMovie = await this.MovieModel.findByIdAndUpdate(_id, dto, {
       new: true,
     });
@@ -133,5 +140,26 @@ export class MovieService {
       { rating: newRating },
       { new: true }
     );
+  }
+
+  async sendNotification({ poster, title }: MovieDto) {
+    if (process.env.NODE_ENV !== 'development') {
+      await this.TelegramService.sendPhoto(poster);
+
+      const message = `<b>${title}</b>`;
+
+      await this.TelegramService.sendMessage(message, {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                url: 'https://kinogo.film/films/12812-bog-jeto-pulja-2023-smotret-onlajn-besplatno.html',
+                text: 'Go to watch',
+              },
+            ],
+          ],
+        },
+      });
+    }
   }
 }

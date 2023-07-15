@@ -13,6 +13,7 @@ import { ActorModule } from './actor/actor.module';
 import { MovieModule } from './movie/movie.module';
 import { RatingController } from './rating/rating.controller';
 import { RatingModule } from './rating/rating.module';
+import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RatingModule } from './rating/rating.module';
     ActorModule,
     MovieModule,
     RatingModule,
+    TelegramModule,
   ],
   controllers: [AppController, RatingController],
   providers: [AppService],
