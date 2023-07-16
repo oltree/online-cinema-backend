@@ -1,6 +1,7 @@
-import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { Ref, prop } from '@typegoose/typegoose';
-import { MovieModel } from 'src/movie/movie.model';
+import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+
+import { MovieModel } from '@/movie/movie.model';
 
 export interface UserModel extends Base {} // lifehack for add _id in UserModel
 

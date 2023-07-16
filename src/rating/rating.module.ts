@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { RatingService } from './rating.service';
-import { RatingController } from './rating.controller';
 import { TypegooseModule } from 'nestjs-typegoose';
+
+import { MovieModule } from '@/movie/movie.module';
+
+import { RatingController } from './rating.controller';
 import { RatingModel } from './rating.model';
-import { MovieModule } from 'src/movie/movie.module';
+import { RatingService } from './rating.service';
 
 @Module({
   controllers: [RatingController],

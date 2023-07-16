@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from 'nestjs-typegoose';
-import { ActorModel } from './actor.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+import { InjectModel } from 'nestjs-typegoose';
+
 import { ActorDto } from './actor.dto';
+import { ActorModel } from './actor.model';
 
 @Injectable()
 export class ActorService {

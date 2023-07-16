@@ -8,13 +8,18 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { RatingService } from './rating.service';
-import { Auth } from 'src/auth/decorators/admin.decorator';
-import { Roles } from 'src/shared/enums/roles.enum';
-import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
 import { Types } from 'mongoose';
-import { User } from 'src/user/user.decorator';
+
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { IdValidationPipe } from '@/pipes/id.validation.pipe';
+
+import { Auth } from '@/auth/decorators/admin.decorator';
+
+import { User } from '@/user/user.decorator';
+
 import { RatingDto } from './rating.dto';
+import { RatingService } from './rating.service';
 
 @Controller('ratings')
 export class RatingController {

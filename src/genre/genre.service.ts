@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
-import { GenreModel } from './genre.model';
+
+import { MovieService } from '@/movie/movie.service';
+
 import { GenreDto } from './genre.dto';
-import { MovieService } from 'src/movie/movie.service';
 import { Collection } from './genre.interface';
+import { GenreModel } from './genre.model';
 
 @Injectable()
 export class GenreService {
