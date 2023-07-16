@@ -1,23 +1,28 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
-  Put,
-  UsePipes,
-  Delete,
-  ValidationPipe,
-  Query,
   Post,
+  Put,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
-import { Roles } from 'src/shared/enums/roles.enum';
-import { Auth } from '../auth/decorators/admin.decorator';
-import { MovieService } from './movie.service';
-import { MovieDto } from './dto/movie.dto';
 import { Types } from 'mongoose';
+
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { IdValidationPipe } from '@/pipes/id.validation.pipe';
+
+import { Auth } from '../auth/decorators/admin.decorator';
+
 import { GenreIdsDto } from './dto/genreIds.dto';
+import { MovieDto } from './dto/movie.dto';
+import { MovieService } from './movie.service';
+
 @Controller('movies')
 export class MovieController {
   constructor(private readonly MovieService: MovieService) {}

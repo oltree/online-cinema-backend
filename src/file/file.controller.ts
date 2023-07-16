@@ -1,15 +1,17 @@
 import { Controller } from '@nestjs/common';
-import { FileService } from './file.service';
 import {
-  Post,
   HttpCode,
-  UploadedFile,
+  Post,
   Query,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { Roles } from '../shared/enums/roles.enum';
-import { Auth } from '../auth/decorators/admin.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
+
+import { Auth } from '../auth/decorators/admin.decorator';
+import { Roles } from '../shared/enums/roles.enum';
+
+import { FileService } from './file.service';
 
 @Controller('files')
 export class FileController {

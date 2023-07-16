@@ -1,10 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MovieModel } from './movie.model';
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { MovieDto } from './dto/movie.dto';
-import { InjectModel } from 'nestjs-typegoose';
 import { Types } from 'mongoose';
-import { TelegramService } from 'src/telegram/telegram.service';
+import { InjectModel } from 'nestjs-typegoose';
+
+import { TelegramService } from '@/telegram/telegram.service';
+
+import { MovieDto } from './dto/movie.dto';
+import { MovieModel } from './movie.model';
 
 @Injectable()
 export class MovieService {

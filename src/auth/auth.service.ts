@@ -1,16 +1,19 @@
 import {
+  BadRequestException,
   Injectable,
   UnauthorizedException,
-  BadRequestException,
 } from '@nestjs/common';
-import { ModelType } from '@typegoose/typegoose/lib/types';
-import { genSalt, hash, compare } from 'bcryptjs';
-import { InjectModel } from 'nestjs-typegoose';
-import { AuthDto } from './dto/auth.dto';
-import { UserModel } from '../user/user.model';
 import { JwtService } from '@nestjs/jwt';
+import { ModelType } from '@typegoose/typegoose/lib/types';
+import { compare, genSalt, hash } from 'bcryptjs';
+import { InjectModel } from 'nestjs-typegoose';
+
+import { SALT_ROUND } from '@/shared/constants/salt';
+
+import { UserModel } from '../user/user.model';
+
+import { AuthDto } from './dto/auth.dto';
 import { RefreshTokenDto } from './dto/refreshToken.dto';
-import { SALT_ROUND } from 'src/shared/constants/salt';
 
 @Injectable()
 export class AuthService {

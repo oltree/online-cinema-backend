@@ -1,23 +1,27 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
   Put,
-  UsePipes,
-  Delete,
-  ValidationPipe,
   Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { User } from './user.decorator';
-import { UserService } from './user.service';
-import { Auth } from '../auth/decorators/admin.decorator';
-import { Roles } from 'src/shared/enums/roles.enum';
-import { UserDto } from './user.dto';
-import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
 import { Types } from 'mongoose';
+
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { IdValidationPipe } from '@/pipes/id.validation.pipe';
+
+import { Auth } from '../auth/decorators/admin.decorator';
+
+import { User } from './user.decorator';
+import { UserDto } from './user.dto';
 import { UserModel } from './user.model';
+import { UserService } from './user.service';
 
 @Controller('users')
 export class UserController {

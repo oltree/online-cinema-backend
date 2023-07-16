@@ -1,21 +1,25 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
-  Put,
-  UsePipes,
-  Delete,
-  ValidationPipe,
-  Query,
   Post,
+  Put,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
+
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { IdValidationPipe } from '@/pipes/id.validation.pipe';
+
 import { Auth } from '../auth/decorators/admin.decorator';
-import { Roles } from 'src/shared/enums/roles.enum';
-import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
-import { GenreService } from './genre.service';
+
 import { GenreDto } from './genre.dto';
+import { GenreService } from './genre.service';
 
 @Controller('genres')
 export class GenreController {

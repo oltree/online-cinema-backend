@@ -1,21 +1,25 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
-  Put,
-  UsePipes,
-  Delete,
-  ValidationPipe,
-  Query,
   Post,
+  Put,
+  Query,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { ActorService } from './actor.service';
-import { ActorDto } from './actor.dto';
-import { IdValidationPipe } from 'src/pipes/id.validation.pipe';
-import { Roles } from 'src/shared/enums/roles.enum';
+
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { IdValidationPipe } from '@/pipes/id.validation.pipe';
+
 import { Auth } from '../auth/decorators/admin.decorator';
+
+import { ActorDto } from './actor.dto';
+import { ActorService } from './actor.service';
 
 @Controller('actor')
 export class ActorController {
