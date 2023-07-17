@@ -16,7 +16,7 @@ import { Roles } from '@/shared/enums/roles.enum';
 
 import { IdValidationPipe } from '@/pipes/id.validation.pipe';
 
-import { Auth } from '../auth/decorators/admin.decorator';
+import { Auth } from '@/auth/decorators/admin.decorator';
 
 import { GenreDto } from './genre.dto';
 import { GenreService } from './genre.service';

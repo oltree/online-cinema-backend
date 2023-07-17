@@ -1,8 +1,8 @@
 import { UseGuards, applyDecorators } from '@nestjs/common';
 
-import { Roles } from '../../shared/enums/roles.enum';
-import { OnlyAdminGuard } from '../guards/admin.guard';
-import { JwtAuthGuard } from '../guards/jwt.guard';
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { JwtAuthGuard, OnlyAdminGuard } from '../guards';
 
 export const Auth = (role: Roles = Roles.User) =>
   applyDecorators(

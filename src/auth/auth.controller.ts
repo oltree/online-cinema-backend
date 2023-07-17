@@ -8,8 +8,7 @@ import {
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto/auth.dto';
-import { RefreshTokenDto } from './dto/refreshToken.dto';
+import { AuthDto, RefreshTokenDto } from './dto';
 
 @Controller('auth')
 export class AuthController {

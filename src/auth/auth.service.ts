@@ -10,16 +10,14 @@ import { InjectModel } from 'nestjs-typegoose';
 
 import { SALT_ROUND } from '@/shared/constants/salt';
 
-import { UserModel } from '../user/user.model';
+import { UserModel } from '@/user/user.model';
 
-import { AuthDto } from './dto/auth.dto';
-import { RefreshTokenDto } from './dto/refreshToken.dto';
+import { AuthDto, RefreshTokenDto } from './dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(UserModel) private readonly UserModel: ModelType<UserModel>,
-
     private readonly jwtService: JwtService
   ) {}
 
@@ -33,13 +31,11 @@ export class AuthService {
     }
 
     const salt = await genSalt(SALT_ROUND);
-
     const newUser = new this.UserModel({
       email,
       password: await hash(password, salt),
     });
     const user = await newUser.save();
-
     const tokens = await this.issueTokenPair(String(user._id));
 
     return {
@@ -108,11 +104,11 @@ export class AuthService {
     return { accessToken, refreshToken };
   }
 
-  returnUserFields(user: UserModel) {
+  returnUserFields({ _id, email, isAdmin }: UserModel) {
     return {
-      _id: user._id,
-      email: user.email,
-      isAdmin: user.isAdmin,
+      _id,
+      email,
+      isAdmin,
     };
   }
 }
