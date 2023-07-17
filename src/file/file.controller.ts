@@ -8,8 +8,9 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { Auth } from '../auth/decorators/admin.decorator';
-import { Roles } from '../shared/enums/roles.enum';
+import { Roles } from '@/shared/enums/roles.enum';
+
+import { Auth } from '@/auth/decorators/admin.decorator';
 
 import { FileService } from './file.service';
 
