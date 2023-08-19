@@ -4,6 +4,23 @@
 
 This App is a backend application for the Online Movie Theater project. It provides the server-side functionality required to support the movie browsing, user authentication, and other features of the application.
 
+## Technologies and Dependencies
+
+- **Nest.js:** A progressive Node.js framework for building efficient and scalable server-side applications.
+- **TypeScript:** A statically typed superset of JavaScript that enables the use of modern ECMAScript features.
+- **MongoDB:** A popular NoSQL database used for storing application data.
+- **Passport:** A flexible authentication middleware for Node.js.
+- **JWT:** JSON Web Tokens for secure authentication and authorization.
+- **Mongoose:** An Object Data Modeling (ODM) library for MongoDB and Node.js.
+- **RxJS:** A library for reactive programming using Observables.
+- **Telegraf:** A modern Telegram Bot Framework for Node.js.
+
+## Development Tools
+
+- **ESLint:** A pluggable linting utility for JavaScript and TypeScript.
+- **Prettier:** An opinionated code formatter that enforces consistent code style.
+- **Jest:** A JavaScript testing framework with a focus on simplicity and performance.
+
 ## Installation
 
 1. Clone the repository.
@@ -24,23 +41,6 @@ This App is a backend application for the Online Movie Theater project. It provi
 - `test:cov`: Runs the unit tests and generates a coverage report.
 - `test:debug`: Runs the unit tests in debug mode.
 - `test:e2e`: Runs the end-to-end tests using Jest and a custom configuration.
-
-## Technologies and Dependencies
-
-- **Nest.js:** A progressive Node.js framework for building efficient and scalable server-side applications.
-- **TypeScript:** A statically typed superset of JavaScript that enables the use of modern ECMAScript features.
-- **MongoDB:** A popular NoSQL database used for storing application data.
-- **Passport:** A flexible authentication middleware for Node.js.
-- **JWT:** JSON Web Tokens for secure authentication and authorization.
-- **Mongoose:** An Object Data Modeling (ODM) library for MongoDB and Node.js.
-- **RxJS:** A library for reactive programming using Observables.
-- **Telegraf:** A modern Telegram Bot Framework for Node.js.
-
-## Development Tools
-
-- **ESLint:** A pluggable linting utility for JavaScript and TypeScript.
-- **Prettier:** An opinionated code formatter that enforces consistent code style.
-- **Jest:** A JavaScript testing framework with a focus on simplicity and performance.
 
 ## Contact
 
