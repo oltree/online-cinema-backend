@@ -21,12 +21,6 @@ This App is a backend application for the Online Movie Theater project. It provi
 - **Prettier:** An opinionated code formatter that enforces consistent code style.
 - **Jest:** A JavaScript testing framework with a focus on simplicity and performance.
 
-## Installation
-
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Run `yarn` to install the dependencies.
-
 ## Scripts
 
 - `build`: Builds the application using Nest.
